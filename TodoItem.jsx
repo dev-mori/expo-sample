@@ -1,7 +1,9 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Button } from "react-native";
+import { useRecoilState } from "recoil";
+import { todosState } from "./Recoil";
 
-export default function TodoItem({ title }) {
+export default function TodoItem({ title, id }) {
   const styles = StyleSheet.create({
     item: {
       width: 200,
@@ -16,12 +18,33 @@ export default function TodoItem({ title }) {
     title: {
       fontSize: 25,
     },
+    button: {
+      color: "white",
+      height: 10,
+      width: 10,
+    },
   });
+  const [todos, set_todos] = useRecoilState(todosState);
+
   return (
-    <View style={styles.item}>
-      <Text style={styles.title} numberOfLines={1}>
-        {title}
-      </Text>
-    </View>
+    <>
+      <View style={styles.item}>
+        <Text style={styles.title} numberOfLines={1}>
+          {title}
+        </Text>
+      </View>
+      <Button
+        style={styles.button}
+        title="✕"
+        color="black"
+        onPress={() => {
+          set_todos(
+            todos.filter((todo) => {
+              return todo.id !== id;
+            })
+          );
+        }}
+      />
+    </>
   );
 }

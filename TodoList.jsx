@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 export default function TodoList() {
   const todos = useRecoilValue(todosList);
-  const renderItem = ({ item }) => <TodoItem title={item.text} />;
+  const renderItem = ({ item }) => <TodoItem title={item.text} id={item.id} />;
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
